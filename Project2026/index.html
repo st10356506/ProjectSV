@@ -42,22 +42,16 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* --- Background Animations --- */
     .hearts-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0; }
     .heart { position: absolute; font-size: 1.5rem; opacity: 0.25; animation: float 15s infinite ease-in-out; }
     .heart.pink { color: var(--deep-rose); }
     .heart.emerald { color: var(--emerald); }
-    
-    .heart:nth-child(1) { left: 10%; top: 20%; animation-duration: 12s; }
-    .heart:nth-child(2) { left: 80%; top: 30%; animation-duration: 18s; }
-    .heart:nth-child(3) { left: 30%; top: 70%; animation-duration: 14s; }
     
     @keyframes float {
       0%, 100% { transform: translateY(0) rotate(0deg); }
       50% { transform: translateY(-25px) rotate(-3deg); }
     }
 
-    /* --- Layout --- */
     .container {
       position: relative;
       z-index: 1;
@@ -70,7 +64,6 @@
       text-align: center;
     }
 
-    /* --- Screens --- */
     .screen {
       display: none;
       flex-direction: column;
@@ -86,7 +79,6 @@
       animation: fadeIn 0.6s ease-out;
     }
 
-    /* FIXED: Background removed here so the main gradient shows through */
     #yes-screen.active,
     #no-screen.active {
       position: fixed;
@@ -95,7 +87,6 @@
       height: 100vh;
       max-width: none;
       z-index: 50;
-      /* Background removed to show body gradient */
       padding: 2rem;
       overflow-y: auto;
     }
@@ -122,7 +113,6 @@
       text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
     }
 
-    /* --- Buttons --- */
     .buttons { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; justify-content: center; }
     
     .btn {
@@ -146,7 +136,6 @@
     .btn-sage { background: linear-gradient(135deg, var(--sage-light), var(--sage)); color: #4a5c3d; }
     .btn-sage:hover { background: linear-gradient(135deg, var(--sage), var(--sage-dark)); color: white; }
 
-    /* --- Timeline Styling --- */
     .timeline-section { width: 100%; max-width: 600px; margin-top: 2rem; position: relative; z-index: 2; margin-left: auto; margin-right: auto; }
     
     .timeline-toggle {
@@ -162,7 +151,6 @@
       transition: all 0.3s ease;
       display: flex; align-items: center; gap: 0.5rem; margin: 0 auto;
     }
-    .timeline-toggle:hover { background: var(--sage-light); }
 
     .timeline { display: none; margin-top: 2rem; padding-left: 1.5rem; position: relative; }
     .timeline.visible { display: block; animation: fadeIn 0.5s ease-out; }
@@ -192,26 +180,15 @@
     .timeline-item.expanded .timeline-content { max-height: 2000px; }
     .timeline-body { padding: 1rem 1rem 1rem 0; text-align: left; }
     
-    .timeline-image {
-      width: 100%; border-radius: 12px; object-fit: cover; margin-bottom: 0.8rem;
-      box-shadow: 0 4px 15px var(--sage-shadow); border: 2px solid var(--sage-light);
-    }
+    .timeline-image { width: 100%; border-radius: 12px; object-fit: cover; margin-bottom: 0.8rem; border: 2px solid var(--sage-light); }
 
-    /* --- Confetti & Messages --- */
     .celebration-text { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--deep-rose); margin-bottom: 1rem; }
     .message { font-size: 1.2rem; color: #6b4a55; }
     
-    /* Updated No Messages Box */
     .no-messages { 
-      display: flex; 
-      flex-direction: column; 
-      gap: 1rem; 
-      align-items: center; 
-      background: rgba(255, 255, 255, 0.9); /* Slightly transparent white to blend nicely */
-      padding: 2rem; 
-      border-radius: 15px; 
-      border: 2px solid var(--deep-rose);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      display: flex; flex-direction: column; gap: 1rem; align-items: center; 
+      background: rgba(255, 255, 255, 0.9); padding: 2rem; border-radius: 15px; 
+      border: 2px solid var(--deep-rose); box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
     
     #confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; }
@@ -250,230 +227,226 @@
           <span>▼</span>
         </button>
         
-         <div class="timeline" id="timeline">
-          <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">First videocall</span>
-              <span class="timeline-title">The beginning of something amazing</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/photo1.jpeg" alt="Our first memory" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">How it all started. 23/04/2024, This was the first time we spoke and truly connected. Stay tuned to see how it’s going</p>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">The falling phase</span>
-              <span class="timeline-title">We knew we we're falling for each other, we just didn't know how to say it.</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/photo2.jpeg" alt="Falling phase" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">21/05/2024, We didn't know it yet but we were falling for each other more and more every single day.</p>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">Total heart eyes</span>
-              <span class="timeline-title">The moment I realized just how beautiful she is.</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/photo3.jpeg" alt="Favorite memory" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">21/05/2024,Back when our world existed mostly on this screen. I used to look forward to these calls all day just to see that smile.</p>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">The first real meet</span>
-              <span class="timeline-title">The day I saw her beautiful face for the first time.</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/photo4.jpeg" alt="First meet" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">29/08/2024, The moment we went from "online" to "offline." I thought she was beautiful on camera, but seeing her in person changed everything.</p>
-              </div>
-            </div>
+        <div class="timeline" id="timeline">
+          <div class="timeline-items">
             
-          </div>
-           <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">First date chronicals</span>
-              <span class="timeline-title">15/09/2024</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/photo5.jpeg" alt="First date" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">Our first official date!! I was nervous, she was stunning, and mamee was there to keep the vibes up lol.🤣💓</p>
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">First videocall</span>
+                <span class="timeline-title">The beginning of something amazing</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo1.jpeg" alt="First call">
+                  <p class="timeline-caption">How it all started. 23/04/2024, This was the first time we spoke and truly connected. Stay tuned to see how it’s going</p>
+                </div>
               </div>
             </div>
-            
-          </div>
-          </div>
-           <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">MORE DATES!!</span>
-              <span class="timeline-title">During this time i was completely in love with her</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/photo6.jpeg" alt="more dates" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">02/11/2024, Life isn't always serious, and I'm glad I found someone who matches my level of crazy. This was another date where we laughed more than we ate.</p>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">The falling phase</span>
+                <span class="timeline-title">The falling phase</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo2.jpeg" alt="Falling phase">
+                  <p class="timeline-caption">21/05/2024, We didn't know it yet but we were falling for each other more and more every single day.</p>
+                </div>
               </div>
             </div>
-            
-          </div>
-          </div>
-           <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">The Monte date</span>
-              <span class="timeline-title">One of our favourite dates</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/photo7.jpeg" alt="First date" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">12/12/2024, This wasn't just another date, It was the moment everything made sense. We laughed, we cried, and I knew right then that "forever" was the only destination that made sense.</p>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">Total heart eyes</span>
+                <span class="timeline-title">Total heart eyes</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo3.jpeg" alt="Heart eyes">
+                  <p class="timeline-caption">21/05/2024,Back when our world existed mostly on this screen. I used to look forward to these calls all day just to see that smile.</p>
+                </div>
               </div>
             </div>
-            
-          </div>
-          </div>
-           <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">Monte date again 😂</span>
-              <span class="timeline-title">I love her face!</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/photo8.jpeg" alt="First date" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">I don't know if she knows this but I love holding her as tight as I can.</p>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">The first real meet</span>
+                <span class="timeline-title">The first real meet</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo4.jpeg" alt="First meet">
+                  <p class="timeline-caption">29/08/2024, The moment we went from "online" to "offline." I thought she was beautiful on camera, but seeing her in person changed everything.</p>
+                </div>
               </div>
             </div>
-            
-          </div>
-          </div>
-           <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">MY BIRTHDAYYY</span>
-              <span class="timeline-title">She made my birthday the most special day ever!</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/Valentines.jpeg" alt="First date" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">04/02/2025, My birthday. I’ve always been low-key about my day, but she went above and beyond to make me feel like the main character. It’s not just about the gifts, it’s about how she knows exactly what makes me happy.</p>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">First date chronicals</span>
+                <span class="timeline-title">15/09/2024</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo5.jpeg" alt="First date">
+                  <p class="timeline-caption">Our first official date!! I was nervous, she was stunning, and mamee was there to keep the vibes up lol.🤣💓</p>
+                </div>
               </div>
             </div>
-            
-          </div>
-          </div>
-           <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">Our first Valentines day date</span>
-              <span class="timeline-title">Our most beautiful moment date</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/photo9.jpeg" alt="First date" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">14/02/2025, Our very first Valentine’s Day. I remember being so proud to call her mine then, and that feeling has only grown every single day since.</p>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">MORE DATES!!</span>
+                <span class="timeline-title">MORE DATES!!</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo6.jpeg" alt="More dates">
+                  <p class="timeline-caption">02/11/2024, Life isn't always serious, and I'm glad I found someone who matches my level of crazy. This was another date where we laughed more than we ate.</p>
+                </div>
               </div>
             </div>
-            
-          </div>
-          </div>
-           <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">AWS part 2</span>
-              <span class="timeline-title">I'd say this was our most fun date</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/photo10.jpeg" alt="First date" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">20/08/2025, The date where we had a lot of laughs together and she stole my jacket 😂.</p>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">The Monte date</span>
+                <span class="timeline-title">One of our favourite dates</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo7.jpeg" alt="Monte date">
+                  <p class="timeline-caption">12/12/2024, This wasn't just another date, It was the moment everything made sense. We laughed, we cried, and I knew right then that "forever" was the only destination that made sense.</p>
+                </div>
               </div>
             </div>
-            
-          </div>
-          
-          </div>
-           <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">AWS part 2...again</span>
-              <span class="timeline-title">This deserved a highlight because of how beautiful she looked on this day.</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/photo11.jpeg" alt="First date" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">Okay maybe she wore the jacket better😂 I love her so much.</p>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">Monte date again 😂</span>
+                <span class="timeline-title">I love her face!</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo8.jpeg" alt="Mont date again">
+                  <p class="timeline-caption">I don't know if she knows this but I love holding her as tight as I can.</p>
+                </div>
               </div>
             </div>
-            
-          </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">MY BIRTHDAYYY</span>
+                <span class="timeline-title">Most special day ever!</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/Valentines.jpeg" alt="Birthday">
+                  <p class="timeline-caption">04/02/2025, My birthday. I’ve always been low-key about my day, but she went above and beyond to make me feel like the main character. It’s not just about the gifts, it’s about how she knows exactly what makes me happy.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">First Valentines day</span>
+                <span class="timeline-title">Our first Valentines date night</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo9.jpeg" alt="First Valentines">
+                  <p class="timeline-caption">14/02/2025, Our very first Valentine’s Day. I remember being so proud to call her mine and that feeling has only grown every single day since.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">AWS part 1</span>
+                <span class="timeline-title">AWS part 1</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo10.jpeg" alt="AWS 1">
+                  <p class="timeline-caption">20/08/2025, The date where we had a lot of laughs together and she stole my jacket 😂.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">AWS part 2</span>
+                <span class="timeline-title">AWS part 2</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo11.jpeg" alt="AWS 2">
+                  <p class="timeline-caption">Okay maybe she wore the jacket better😂 I love her so much.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">Our dramatic date</span>
+                <span class="timeline-title">Our dramatic date</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo12.jpeg" alt="Dramatic date">
+                  <p class="timeline-caption">22/12/2025, They say "move in silence", keep it low-key, but we are too ICONIC for my neighbor to miss. One of our recent dates with the love of my life and the best company we could’ve asked for, Yushy, aka Didi.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">Our most recent date</span>
+                <span class="timeline-title">Our most recent date</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/Laguna.jpeg" alt="Recent date">
+                  <p class="timeline-caption">07/01/2026, The date where we explored UNISA and had so much of fun together. Running errands with her is kinda fun 👀</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">My beautiful pyaarie waarie</span>
+                <span class="timeline-title">My beautiful pyaarie waarie</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/Pyaarie.jpeg" alt="Pyaarie">
+                  <p class="timeline-caption">17/04/2004, The date my gorgeous pyaarie waarie was born. She is my everything and I love her to bits 💖💖💖.</p>
+                </div>
+              </div>
+            </div>
 
           </div>
-           <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">Our dramatic date</span>
-              <span class="timeline-title">This was one of our most memorable dates...for many reasons 👀</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/photo12.jpeg" alt="First date" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">22/12/2025, They say "move in silence", keep it low-key, but we are too ICONIC for my neighbor to miss. One of our recent dates with the love of my life and the best company we could’ve asked for, Yushy, aka Didi.</p>
-              </div>
-            </div>
-            
-          </div>
+        </div>
+      </div>
+      
+    </div>
 
-          </div>
-           <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">Our most recent date</span>
-              <span class="timeline-title">Our most adventurous date yet.</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/Laguna.jpeg" alt="First date" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">07/01/2026, The date where we explored UNISA and had so much of fun together. Running errands with her is kinda fun 👀</p>
-              </div>
-            </div>
-            
-          </div>
-
-           </div>
-           <div class="timeline-item" data-item>
-            <div class="timeline-header">
-              <span class="timeline-date">My beautiful pyaarie waarie</span>
-              <span class="timeline-title">My forever date.</span>
-              <span class="timeline-chevron">▼</span>
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-body">
-                <img class="timeline-image" src="images/Pyaarie.jpeg" alt="First date" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23B5C9A8%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%237D9B69%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EAdd your photo%3C/text%3E%3C/svg%3E'">
-                <p class="timeline-caption">17/04/2004, The date my gorgeous pyaarie waarie was born. She is my everything and I love her to bits 💖💖💖.</p>
-              </div>
-            </div>
-            
-          </div>
-
-          </div> </div> </div> </div> <div id="yes-screen" class="screen">
+    <div id="yes-screen" class="screen">
       <h1 class="celebration-text">You said yes! ♥</h1>
       <p class="message">How many times did you click no? Just kidding, I love you very much Jaanuki.</p>
       <button type="button" class="btn btn-sage" id="view-timeline-btn">View our story</button>
@@ -488,7 +461,9 @@
       </div>
     </div>
 
-  </div> <div id="confetti-container" class="confetti-container"></div>
+  </div>
+
+  <div id="confetti-container" class="confetti-container"></div>
 
   <script>
     const noMessages = [
@@ -519,7 +494,6 @@
     const timelineToggle = document.getElementById('timeline-toggle');
     const timeline = document.getElementById('timeline');
 
-    // Navigation Functions
     function showYesScreen() {
       mainScreen.classList.remove('active');
       noScreen.classList.remove('active');
@@ -551,39 +525,29 @@
       yesScreen.classList.remove('active');
       mainScreen.classList.add('active');
       timeline.classList.add('visible');
-      timelineToggle.classList.add('expanded');
       timelineToggle.querySelector('span:last-child').textContent = '▲';
-      // Scroll to timeline
       setTimeout(() => timeline.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     }
 
-    // Event Listeners
     yesBtn.addEventListener('click', showYesScreen);
     tryYesBtn.addEventListener('click', showYesScreen);
-    
     noBtn.addEventListener('click', showNoScreen);
     noBtn2.addEventListener('click', showNoScreen);
-    
     backBtn.addEventListener('click', goBack);
     viewTimelineBtn.addEventListener('click', viewTimelineFromYes);
 
-    // Timeline Toggle
     timelineToggle.addEventListener('click', () => {
       const isVisible = timeline.classList.toggle('visible');
-      timelineToggle.classList.toggle('expanded', isVisible);
       timelineToggle.querySelector('span:last-child').textContent = isVisible ? '▲' : '▼';
     });
 
-    // Expand Timeline Items
     document.querySelectorAll('.timeline-header').forEach(header => {
       header.addEventListener('click', function() {
         this.parentElement.classList.toggle('expanded');
       });
     });
 
-    // Mobile-friendly "No" button move
     function moveNoButton(btn, e) {
-      // Only move if not on mobile (optional, or keep it for fun)
       const rect = btn.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
@@ -594,33 +558,21 @@
     noBtn.addEventListener('mousemove', (e) => moveNoButton(noBtn, e));
     noBtn2.addEventListener('mousemove', (e) => moveNoButton(noBtn2, e));
 
-    // Confetti
     function createConfetti() {
       const container = document.getElementById('confetti-container');
       const colors = ['#e8a0b5', '#c76b8a', '#f8e1e7', '#50C878', '#2E8B57', '#F8313E'];
-      const shapes = ['♥', '♦', '★', '•'];
-
       for (let i = 0; i < 60; i++) {
         const confetti = document.createElement('div');
-        confetti.className = 'confetti ' + (Math.random() > 0.5 ? 'heart' : '');
-        if (confetti.classList.contains('heart')) {
-             confetti.textContent = '♥';
-             confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
-        } else {
-             confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
-             confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
-        }
-        
+        confetti.className = 'confetti';
+        confetti.textContent = '♥';
+        confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
         confetti.style.left = Math.random() * 100 + 'vw';
         confetti.style.animationDelay = Math.random() * 0.5 + 's';
         confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
         container.appendChild(confetti);
-        
         setTimeout(() => confetti.remove(), 4000);
       }
     }
   </script>
 </body>
-
 </html>
-
