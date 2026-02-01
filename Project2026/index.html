@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blush: #f8e1e7;
+      --rose: #e8a0b5;
+      --deep-rose: #c76b8a;
+      --cream: #fff9fb;
+      --gold: #d4a574;
+      --sage: #9CAF88;
+      --sage-dark: #7D9B69;
+      --sage-light: #B5C9A8;
+      --emerald: #50C878;
+      --emerald-dark: #2E8B57;
+      --shadow: rgba(199, 107, 138, 0.2);
+      --red: #F8313E;
+      --sage-shadow: rgba(125, 155, 105, 0.25);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(-45deg, var(--cream), var(--blush), var(--deep-rose), #f5d0dc, var(--red));
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #5c3d4a;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* --- Background Animations --- */
+    .hearts-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0; }
+    .heart { position: absolute; font-size: 1.5rem; opacity: 0.25; animation: float 15s infinite ease-in-out; }
+    .heart.pink { color: var(--deep-rose); }
+    .heart.emerald { color: var(--emerald); }
+    
+    .heart:nth-child(1) { left: 10%; top: 20%; animation-duration: 12s; }
+    .heart:nth-child(2) { left: 80%; top: 30%; animation-duration: 18s; }
+    .heart:nth-child(3) { left: 30%; top: 70%; animation-duration: 14s; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-25px) rotate(-3deg); }
+    }
+
+    /* --- Layout --- */
+    .container {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* --- Screens --- */
+    .screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .screen.active {
+      display: flex;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    /* FIXED: Background removed here so the main gradient shows through */
+    #yes-screen.active,
+    #no-screen.active {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      max-width: none;
+      z-index: 50;
+      /* Background removed to show body gradient */
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 600;
+      color: var(--emerald-dark);
+      text-shadow: 0 2px 10px var(--shadow);
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #fff;
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+    }
+
+    /* --- Buttons --- */
+    .buttons { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; justify-content: center; }
+    
+    .btn {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px var(--shadow);
+    }
+
+    .btn-yes { background: linear-gradient(135deg, var(--rose), var(--deep-rose)); color: white; }
+    .btn-yes:hover { transform: scale(1.05); }
+
+    .btn-no { background: white; color: var(--deep-rose); border: 2px solid var(--rose); }
+    .btn-no:hover { transform: translate(var(--no-x, 0), var(--no-y, 0)); }
+
+    .btn-sage { background: linear-gradient(135deg, var(--sage-light), var(--sage)); color: #4a5c3d; }
+    .btn-sage:hover { background: linear-gradient(135deg, var(--sage), var(--sage-dark)); color: white; }
+
+    /* --- Timeline Styling --- */
+    .timeline-section { width: 100%; max-width: 600px; margin-top: 2rem; position: relative; z-index: 2; margin-left: auto; margin-right: auto; }
+    
+    .timeline-toggle {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.7rem 1.5rem;
+      background: transparent;
+      color: var(--sage-dark);
+      border: 2px solid var(--sage);
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex; align-items: center; gap: 0.5rem; margin: 0 auto;
+    }
+    .timeline-toggle:hover { background: var(--sage-light); }
+
+    .timeline { display: none; margin-top: 2rem; padding-left: 1.5rem; position: relative; }
+    .timeline.visible { display: block; animation: fadeIn 0.5s ease-out; }
+    
+    .timeline-items { position: relative; }
+    .timeline-items::before {
+      content: ''; position: absolute; left: -1.5rem; top: 0; bottom: 0; width: 4px;
+      background: linear-gradient(to bottom, var(--sage-dark), var(--sage), var(--sage-dark));
+      border-radius: 2px;
+    }
+
+    .timeline-item { margin-bottom: 1.5rem; position: relative; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -1.56rem; top: 0.75rem; width: 14px; height: 14px;
+      background: var(--sage); border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 2px var(--sage-dark);
+      z-index: 3;
+    }
+
+    .timeline-header {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.8rem 1rem;
+      background: rgba(255, 255, 255, 0.8); border-radius: 12px; cursor: pointer; border: 1px solid var(--sage-light);
+    }
+    .timeline-date { font-size: 0.9rem; font-weight: 600; color: var(--sage-dark); white-space: nowrap; }
+    .timeline-title { font-size: 1rem; font-weight: 500; text-align: left; flex: 1; }
+    
+    .timeline-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+    .timeline-item.expanded .timeline-content { max-height: 2000px; }
+    .timeline-body { padding: 1rem 1rem 1rem 0; text-align: left; }
+    
+    .timeline-image {
+      width: 100%; border-radius: 12px; object-fit: cover; margin-bottom: 0.8rem;
+      box-shadow: 0 4px 15px var(--sage-shadow); border: 2px solid var(--sage-light);
+    }
+
+    /* --- Confetti & Messages --- */
+    .celebration-text { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--deep-rose); margin-bottom: 1rem; }
+    .message { font-size: 1.2rem; color: #6b4a55; }
+    
+    /* Updated No Messages Box */
+    .no-messages { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 1rem; 
+      align-items: center; 
+      background: rgba(255, 255, 255, 0.9); /* Slightly transparent white to blend nicely */
+      padding: 2rem; 
+      border-radius: 15px; 
+      border: 2px solid var(--deep-rose);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    #confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; }
+    .confetti { position: absolute; width: 10px; height: 10px; animation: confetti-fall 3s ease-out forwards; }
+    @keyframes confetti-fall {
+        0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hearts-bg">
+    <span class="heart pink" style="left: 10%; top: 20%;">♥</span>
+    <span class="heart emerald" style="left: 80%; top: 30%;">♥</span>
+    <span class="heart pink" style="left: 30%; top: 70%;">♥</span>
+    <span class="heart emerald" style="left: 70%; top: 60%;">♥</span>
+    <span class="heart pink" style="left: 50%; top: 10%;">♥</span>
+    <span class="heart emerald" style="left: 20%; top: 50%;">♥</span>
+  </div>
+
+  <div class="container">
+    
+    <div id="main-screen" class="screen active">
+      <h1>Will you be my Valentine?</h1>
+      <p class="subtitle">Mein Tumse Mohabat Kardi Ho ♥</p>
+      
+      <div class="buttons">
+        <button type="button" class="btn btn-yes" id="yes-btn">Yes!</button>
+        <button type="button" class="btn btn-no" id="no-btn">Uhhh...</button>
+      </div>
+
+      <div class="timeline-section">
+        <button type="button" class="timeline-toggle" id="timeline-toggle" aria-expanded="false">
+          <span>Our story</span>
+          <span>▼</span>
+        </button>
+        
+        <div class="timeline" id="timeline">
+          <div class="timeline-items">
+            
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">First videocall</span>
+                <span class="timeline-title">The beginning of something amazing</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo1.jpeg" alt="First call">
+                  <p class="timeline-caption">How it all started. 23/04/2024, This was the first time we spoke and truly connected. Stay tuned to see how it’s going</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">The falling phase</span>
+                <span class="timeline-title">We knew we were falling for each other</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo2.jpeg" alt="Falling phase">
+                  <p class="timeline-caption">21/05/2024, We didn't know it yet but we were falling for each other more every day.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">Total heart eyes</span>
+                <span class="timeline-title">Total heart eyes</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo3.jpeg" alt="Heart eyes">
+                  <p class="timeline-caption">21/05/2024, Back when our world existed mostly on this screen.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">The first real meet</span>
+                <span class="timeline-title">The first real meet</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo4.jpeg" alt="First meet">
+                  <p class="timeline-caption">29/08/2024, The moment we went from "online" to "offline."</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">First date chronicals</span>
+                <span class="timeline-title">15/09/2024</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo5.jpeg" alt="First date">
+                  <p class="timeline-caption">Our first official date!! Mamee was there to keep the vibes up lol.🤣💓</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">MORE DATES!!</span>
+                <span class="timeline-title">Completely in love with her</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo6.jpeg" alt="More dates">
+                  <p class="timeline-caption">02/11/2024, This was another date where we laughed more than we ate.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">The Monte date</span>
+                <span class="timeline-title">One of our favourite dates</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo7.jpeg" alt="Monte date">
+                  <p class="timeline-caption">12/12/2024, The moment everything made sense. "Forever" was the only destination.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">Mont date again 😂</span>
+                <span class="timeline-title">I love her face!</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo8.jpeg" alt="Mont date again">
+                  <p class="timeline-caption">I don't know if she knows this but I love holding her as tight as I can.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">MY BIRTHDAYYY</span>
+                <span class="timeline-title">Most special day ever!</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/Valentines.jpeg" alt="Birthday">
+                  <p class="timeline-caption">04/02/2025, She went above and beyond to make me feel like the main character.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">Our first Valentines day</span>
+                <span class="timeline-title">Our most beautiful moment</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo9.jpeg" alt="First Valentines">
+                  <p class="timeline-caption">14/02/2025, I remember being so proud to call her mine then.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">AWS part 1</span>
+                <span class="timeline-title">Our most fun date</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo10.jpeg" alt="AWS 1">
+                  <p class="timeline-caption">20/08/2025, The date where we had a lot of laughs together and she stole my jacket 😂.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">AWS part 2</span>
+                <span class="timeline-title">She looked beautiful</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo11.jpeg" alt="AWS 2">
+                  <p class="timeline-caption">Okay maybe she wore the jacket better😂 I love her so much.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">Our dramatic date</span>
+                <span class="timeline-title">Memorable for many reasons 👀</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/photo12.jpeg" alt="Dramatic date">
+                  <p class="timeline-caption">22/12/2025, We are too ICONIC for my neighbor to miss.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">Our most recent date</span>
+                <span class="timeline-title">Adventurous date</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/Laguna.jpeg" alt="Recent date">
+                  <p class="timeline-caption">07/01/2026, Explored UNISA. Running errands with her is kinda fun 👀</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-date">My beautiful pyaarie waarie</span>
+                <span class="timeline-title">My forever date</span>
+                <span>▼</span>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-body">
+                  <img class="timeline-image" src="images/Pyaarie.jpeg" alt="Pyaarie">
+                  <p class="timeline-caption">17/04/2004, The date my gorgeous pyaarie waarie was born. My everything. 💖</p>
+                </div>
+              </div>
+            </div>
+
+          </div> </div> </div> </div> <div id="yes-screen" class="screen">
+      <h1 class="celebration-text">You said yes! ♥</h1>
+      <p class="message">How many times did you click no? Just kidding, I love you very much Jaanuki.</p>
+      <button type="button" class="btn btn-sage" id="view-timeline-btn">View our story</button>
+    </div>
+
+    <div id="no-screen" class="screen">
+      <div class="no-messages">
+        <p class="no-message" id="no-message">Are you sure? Maybe click Yes instead? 😊</p>
+        <button type="button" class="btn btn-yes" id="try-yes-btn">Okay, Yes!</button>
+        <button type="button" class="btn btn-no" id="no-btn-2">Still thinking...</button>
+        <button type="button" class="btn btn-sage" id="back-btn">Take me back to the question</button>
+      </div>
+    </div>
+
+  </div> <div id="confetti-container" class="confetti-container"></div>
+
+  <script>
+    const noMessages = [
+      "Are you sure? Maybe click Yes instead? 😊",
+      "Are you feeling okay?",
+      "Hmm, that button might be broken. Try again?",
+      "I made you a whole website you fart. Say yes? ♥",
+      "YE WENNNNNN!!!!! Say yes!!!!",
+      "Pyaarie waarie what are you doing? Say yes!",
+      "HEEEEEBANA????? You still saying no???",
+      "Carry on I'll tell mamee and didi for you",
+      "Okay okay, you win. But really... Yes? ♥",
+      "Last chance! Yes? 😄"
+    ];
+
+    let noClickCount = 0;
+
+    const mainScreen = document.getElementById('main-screen');
+    const yesScreen = document.getElementById('yes-screen');
+    const noScreen = document.getElementById('no-screen');
+    const noMessageEl = document.getElementById('no-message');
+    const yesBtn = document.getElementById('yes-btn');
+    const noBtn = document.getElementById('no-btn');
+    const tryYesBtn = document.getElementById('try-yes-btn');
+    const noBtn2 = document.getElementById('no-btn-2');
+    const backBtn = document.getElementById('back-btn');
+    const viewTimelineBtn = document.getElementById('view-timeline-btn');
+    const timelineToggle = document.getElementById('timeline-toggle');
+    const timeline = document.getElementById('timeline');
+
+    // Navigation Functions
+    function showYesScreen() {
+      mainScreen.classList.remove('active');
+      noScreen.classList.remove('active');
+      yesScreen.classList.add('active');
+      createConfetti();
+      window.scrollTo(0, 0);
+    }
+
+    function showNoScreen() {
+      mainScreen.classList.remove('active');
+      yesScreen.classList.remove('active');
+      noScreen.classList.add('active');
+      if(noClickCount < noMessages.length) {
+          noMessageEl.textContent = noMessages[noClickCount];
+      } else {
+          noMessageEl.textContent = noMessages[noMessages.length - 1];
+      }
+      noClickCount++;
+      window.scrollTo(0, 0);
+    }
+
+    function goBack() {
+      noScreen.classList.remove('active');
+      yesScreen.classList.remove('active');
+      mainScreen.classList.add('active');
+    }
+
+    function viewTimelineFromYes() {
+      yesScreen.classList.remove('active');
+      mainScreen.classList.add('active');
+      timeline.classList.add('visible');
+      timelineToggle.classList.add('expanded');
+      timelineToggle.querySelector('span:last-child').textContent = '▲';
+      // Scroll to timeline
+      setTimeout(() => timeline.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
+
+    // Event Listeners
+    yesBtn.addEventListener('click', showYesScreen);
+    tryYesBtn.addEventListener('click', showYesScreen);
+    
+    noBtn.addEventListener('click', showNoScreen);
+    noBtn2.addEventListener('click', showNoScreen);
+    
+    backBtn.addEventListener('click', goBack);
+    viewTimelineBtn.addEventListener('click', viewTimelineFromYes);
+
+    // Timeline Toggle
+    timelineToggle.addEventListener('click', () => {
+      const isVisible = timeline.classList.toggle('visible');
+      timelineToggle.classList.toggle('expanded', isVisible);
+      timelineToggle.querySelector('span:last-child').textContent = isVisible ? '▲' : '▼';
+    });
+
+    // Expand Timeline Items
+    document.querySelectorAll('.timeline-header').forEach(header => {
+      header.addEventListener('click', function() {
+        this.parentElement.classList.toggle('expanded');
+      });
+    });
+
+    // Mobile-friendly "No" button move
+    function moveNoButton(btn, e) {
+      // Only move if not on mobile (optional, or keep it for fun)
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.setProperty('--no-x', `${-x}px`);
+      btn.style.setProperty('--no-y', `${-y}px`);
+    }
+
+    noBtn.addEventListener('mousemove', (e) => moveNoButton(noBtn, e));
+    noBtn2.addEventListener('mousemove', (e) => moveNoButton(noBtn2, e));
+
+    // Confetti
+    function createConfetti() {
+      const container = document.getElementById('confetti-container');
+      const colors = ['#e8a0b5', '#c76b8a', '#f8e1e7', '#50C878', '#2E8B57', '#F8313E'];
+      const shapes = ['♥', '♦', '★', '•'];
+
+      for (let i = 0; i < 60; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti ' + (Math.random() > 0.5 ? 'heart' : '');
+        if (confetti.classList.contains('heart')) {
+             confetti.textContent = '♥';
+             confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+        } else {
+             confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+             confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+        }
+        
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+        container.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 4000);
+      }
+    }
+  </script>
+</body>
+</html>
